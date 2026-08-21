@@ -1,0 +1,65 @@
+@import './layout.css';
+@import './components.css';
+@import './simulator.css';
+@import './diagrams.css';
+
+/* =========================================
+   Variables de diseño: paleta, tipografía y medidas.
+   Cambiar un valor aquí actualiza toda la aplicación.
+   ========================================= */
+
+:root {
+  --color-bg: #f4f6f9;
+  --color-surface: #ffffff;
+  --color-text: #1f2937;
+  --color-text-muted: #52607a;
+  --color-accent: #1d4ed8;
+  --color-accent-soft: #e4ecfc;
+  --color-border: #dbe2ec;
+  --color-code-bg: #f2f5fa;
+  --color-code-text: #16324f;
+  --color-highlight-bg: #eef3fc;
+  --color-card-bg: #f8fafc;
+  --color-info-bg: #e7f0fd;
+  --color-info-border: #bfd7f6;
+  --color-info-text: #1c3d66;
+  --color-warning-bg: #fdf4e3;
+  --color-warning-border: #eedcb0;
+  --color-warning-text: #6d4a09;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.08);
+  --container-max: 62rem;
+}
+
+/* =========================================
+   Reinicio y estilos base
+   ========================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  line-height: 1.65;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}

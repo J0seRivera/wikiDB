@@ -1,0 +1,253 @@
+/* =========================================
+   Componentes de contenido: secciones y temas
+   ========================================= */
+
+.wiki-section__title {
+  margin: 0 0 0.4rem;
+  font-size: 1.85rem;
+}
+
+.wiki-section__intro {
+  margin: 0;
+  max-width: 44rem;
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+}
+
+.topic {
+  margin-top: 1.5rem;
+  padding: 1.6rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.topic__title {
+  margin: 0 0 1.1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 1.3rem;
+}
+
+.content-block {
+  margin: 0 0 1rem;
+}
+
+.topic > :last-child {
+  margin-bottom: 0;
+}
+
+.block-list {
+  padding-left: 1.4rem;
+}
+
+.block-list li + li {
+  margin-top: 0.35rem;
+}
+
+.notice {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.8rem 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+}
+
+.notice__icon {
+  font-weight: 700;
+}
+
+.notice--info {
+  background: var(--color-info-bg);
+  border-color: var(--color-info-border);
+  color: var(--color-info-text);
+}
+
+.notice--warning {
+  background: var(--color-warning-bg);
+  border-color: var(--color-warning-border);
+  color: var(--color-warning-text);
+}
+
+.highlight {
+  margin: 0 0 1rem;
+  padding: 1rem 1.2rem;
+  background: var(--color-highlight-bg);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+}
+
+.highlight__title {
+  margin: 0 0 0.25rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  font-size: 0.95rem;
+}
+
+.highlight__text {
+  margin: 0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+
+.info-card {
+  padding: 1.1rem 1.2rem;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.info-card__title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: var(--color-accent);
+}
+
+.info-card__text {
+  margin: 0 0 0.6rem;
+  font-size: 0.92rem;
+}
+
+.info-card__list {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.92rem;
+}
+
+.info-card__list li + li {
+  margin-top: 0.3rem;
+}
+
+.info-card .code-block {
+  margin: 0;
+}
+
+.info-card .code-block pre {
+  font-size: 0.8rem;
+}
+
+/* =========================================
+   Imágenes educativas proporcionadas
+   La imagen nunca supera el ancho de su contenedor:
+   así no provoca overflow horizontal en móvil.
+   ========================================= */
+
+.edu-image {
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.edu-image img {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
+  height: auto;
+  margin-inline: auto;
+  border-radius: var(--radius-sm);
+}
+
+.edu-image figcaption {
+  margin-top: 0.6rem;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+/* =========================================
+   Recurso externo complementario
+   Tarjeta de "seguir aprendiendo": reutiliza .highlight y el aspecto de
+   botón primario. Como el enlace es un <a> y no un <button>, solo se le da
+   display propio para que el padding se respete y se vea igual al botón.
+   ========================================= */
+
+.resource-card .button {
+  display: inline-block;
+  margin-top: 0.35rem;
+  text-decoration: none;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table thead th {
+  background: var(--color-accent-soft);
+  font-weight: 600;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table caption {
+  padding-top: 0.6rem;
+  caption-side: bottom;
+  text-align: left;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.code-block__caption {
+  margin-bottom: 0.35rem;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 0.9rem 1.1rem;
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+}
+
+.code-block code {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--color-code-text);
+}
+
+@media (max-width: 600px) {
+  .wiki-section__title {
+    font-size: 1.5rem;
+  }
+
+  .topic {
+    padding: 1.15rem;
+  }
+
+  .topic__title {
+    font-size: 1.15rem;
+  }
+}

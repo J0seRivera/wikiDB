@@ -1,0 +1,143 @@
+/* =========================================
+   Simulador SQL: paneles, editor, botones y estado
+   ========================================= */
+
+.simulator {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.simulator-card {
+  padding: 1.6rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.simulator-card__title {
+  margin: 0 0 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 1.3rem;
+}
+
+.simulator-label {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.simulator-editor {
+  width: 100%;
+  min-height: 8.5rem;
+  padding: 0.9rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-code-text);
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+}
+
+.simulator-hint {
+  margin: 0.5rem 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.simulator-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.simulator-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.button {
+  padding: 0.55rem 1.15rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.button:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.button--primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #ffffff;
+}
+
+.button--primary:hover {
+  background: #1743b8;
+  color: #ffffff;
+}
+
+.button--chip {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+  border-radius: 999px;
+}
+
+/* Mensajes de resultado: el símbolo (✓ / ✕) acompaña al color,
+   de modo que el estado no se comunica solo con colores. */
+.query-status {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+.query-status:empty {
+  display: none;
+}
+
+.query-status--success {
+  background: #e8f6ec;
+  border-color: #bfe3ca;
+  color: #155c31;
+}
+
+.query-status--error {
+  background: #fdeaea;
+  border-color: #f2c4c4;
+  color: #8c1d1d;
+}
+
+.query-status--info {
+  background: var(--color-info-bg);
+  border-color: var(--color-info-border);
+  color: var(--color-info-text);
+}
+
+/* =========================================
+   Diseño responsive: botones cómodos en móvil
+   ========================================= */
+
+@media (max-width: 600px) {
+  .simulator-card {
+    padding: 1.15rem;
+  }
+
+  .simulator-actions .button {
+    flex: 1 1 auto;
+  }
+}
