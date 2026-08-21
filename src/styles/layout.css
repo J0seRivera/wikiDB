@@ -1,0 +1,116 @@
+/* Estructura general: contenedor, cabecera, navegación y pie */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--color-surface);
+  color: var(--color-accent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+.site-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: 1.4rem;
+}
+
+.site-header__name {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.site-header__tagline {
+  margin: 0.15rem 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-nav__list {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0;
+  padding-block: 0.55rem;
+  list-style: none;
+  overflow-x: auto;
+}
+
+.site-nav__list a {
+  display: block;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav__list a:hover {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.site-nav__list a.is-active {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.site-main {
+  padding-block: 2rem 3.5rem;
+}
+
+.site-main:focus {
+  outline: none;
+}
+
+.site-footer {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding-block: 1.3rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    padding-block: 1.1rem;
+  }
+
+  .site-header__name {
+    font-size: 1.2rem;
+  }
+
+  .site-main {
+    padding-block: 1.4rem 2.5rem;
+  }
+}
