@@ -5,7 +5,8 @@
 //   JSON → contenido tipado (WikiData) → renderBlock() → DOM
 //
 // Cada tipo de bloque tiene su propia función de renderizado (párrafo, lista,
-// tabla, código, aviso, destacado, tarjetas, diagrama e imagen). Todos los
+// tabla, código, aviso, destacado, tarjetas, diagrama, imagen y recurso
+// externo). Todos los
 // textos se insertan con textContent, nunca con innerHTML: el contenido no
 // puede interpretarse como HTML, una buena práctica incluso trabajando con
 // datos propios.
@@ -19,6 +20,7 @@ import type {
   ContentBlock,
   HighlightBlock,
   ImageBlock,
+  ResourceBlock,
   TableBlock,
   Topic,
   WikiSection,
@@ -160,6 +162,28 @@ function renderImage(block: ImageBlock): HTMLElement {
   return figure;
 }
 
+// Recurso externo complementario: una tarjeta con texto y un enlace para
+// seguir practicando fuera de la wiki. El enlace abre en pestaña nueva y
+// lleva rel="noopener noreferrer": el sitio externo no obtiene acceso a
+// window.opener y la aplicación sigue funcionando de forma independiente.
+// Reutiliza los estilos existentes (.highlight + .button--primary); solo se
+// ajusta el display del enlace en CSS porque es un <a> y no un <button>.
+function renderResource(block: ResourceBlock): HTMLElement {
+  const aside = createElement('aside', 'highlight resource-card');
+  aside.append(createElement('p', 'highlight__title', block.title));
+  aside.append(createElement('p', 'highlight__text', block.text));
+
+  const link = document.createElement('a');
+  link.className = 'button button--primary';
+  link.href = block.href;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = block.linkLabel;
+  aside.append(link);
+
+  return aside;
+}
+
 // Punto único de despacho: según el tipo de bloque, delega al renderer
 // correspondiente. Agregar un tipo nuevo de contenido = agregar una interfaz
 // en types.ts + un caso aquí + su función de renderizado.
@@ -183,6 +207,8 @@ function renderBlock(block: ContentBlock): HTMLElement {
       return renderDiagram(block.id);
     case 'image':
       return renderImage(block);
+    case 'resource':
+      return renderResource(block);
   }
 }
 

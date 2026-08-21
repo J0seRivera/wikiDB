@@ -623,6 +623,13 @@
                 "Instalar un motor real como MySQL o PostgreSQL y practicar con datos propios.",
                 "Explorar una base NoSQL como MongoDB y comparar enfoques."
               ]
+            },
+            {
+              "type": "resource",
+              "title": "¿Quieres seguir aprendiendo SQL?",
+              "text": "Si quieres continuar practicando SQL, puedes consultar Aprende SQL, un recurso interactivo para aprender y practicar SQL directamente desde el navegador.",
+              "linkLabel": "Visitar Aprende SQL →",
+              "href": "https://www.aprendesql.dev/"
             }
           ]
         }

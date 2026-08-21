@@ -12,7 +12,7 @@
 //           └── Topic  (un tema dentro de la sección, renderizado como artículo)
 //                 └── ContentBlock  (la unidad mínima: párrafo, lista, tabla,
 //                                     código, aviso, destacado, tarjetas,
-//                                     diagrama o imagen)
+//                                     diagrama, imagen o recurso externo)
 
 export interface ParagraphBlock {
   type: 'paragraph';
@@ -77,6 +77,17 @@ export interface ImageBlock {
   caption?: string;
 }
 
+// Recurso externo complementario (un sitio para seguir practicando, por
+// ejemplo). El JSON guarda solo datos: título, texto y enlace; el DOM y los
+// atributos de seguridad los construye content.ts.
+export interface ResourceBlock {
+  type: 'resource';
+  title: string;
+  text: string;
+  linkLabel: string;
+  href: string;
+}
+
 export type ContentBlock =
   | ParagraphBlock
   | NoticeBlock
@@ -86,7 +97,8 @@ export type ContentBlock =
   | HighlightBlock
   | CardsBlock
   | DiagramBlock
-  | ImageBlock;
+  | ImageBlock
+  | ResourceBlock;
 
 export interface Topic {
   id: string;

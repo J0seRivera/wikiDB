@@ -163,6 +163,19 @@
   font-size: 0.85rem;
 }
 
+/* =========================================
+   Recurso externo complementario
+   Tarjeta de "seguir aprendiendo": reutiliza .highlight y el aspecto de
+   botón primario. Como el enlace es un <a> y no un <button>, solo se le da
+   display propio para que el padding se respete y se vea igual al botón.
+   ========================================= */
+
+.resource-card .button {
+  display: inline-block;
+  margin-top: 0.35rem;
+  text-decoration: none;
+}
+
 .table-wrapper {
   overflow-x: auto;
   border: 1px solid var(--color-border);
