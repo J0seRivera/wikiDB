@@ -1,3 +1,19 @@
+// Tipos e interfaces del contenido educativo.
+//
+// El archivo database-concepts.json contiene únicamente datos (sin HTML y sin
+// lógica). Estas interfaces describen la estructura que debe tener ese JSON:
+// al importarlo y ajustarlo con `as WikiData`, TypeScript verifica en tiempo
+// de compilación que las secciones y sus bloques tengan la forma esperada.
+//
+// La jerarquía del contenido es:
+//
+//   WikiData
+//     └── WikiSection  (una sección de la navegación, p. ej. "Fundamentos")
+//           └── Topic  (un tema dentro de la sección, renderizado como artículo)
+//                 └── ContentBlock  (la unidad mínima: párrafo, lista, tabla,
+//                                     código, aviso, destacado, tarjetas,
+//                                     diagrama o imagen)
+
 export interface ParagraphBlock {
   type: 'paragraph';
   text: string;
@@ -28,12 +44,49 @@ export interface CodeBlock {
   code: string;
 }
 
+export interface HighlightBlock {
+  type: 'highlight';
+  title?: string;
+  text: string;
+}
+
+export interface InfoCard {
+  title: string;
+  text?: string;
+  items?: string[];
+  code?: string;
+}
+
+export interface CardsBlock {
+  type: 'cards';
+  cards: InfoCard[];
+}
+
+export interface DiagramBlock {
+  type: 'diagram';
+  id: string;
+}
+
+// Las imágenes educativas se referencian por id: el JSON guarda el dato y
+// content.ts resuelve ese id a la URL real del archivo (importada por Vite).
+// El texto alt viaja en el JSON porque es contenido educativo.
+export interface ImageBlock {
+  type: 'image';
+  id: string;
+  alt: string;
+  caption?: string;
+}
+
 export type ContentBlock =
   | ParagraphBlock
   | NoticeBlock
   | ListBlock
   | TableBlock
-  | CodeBlock;
+  | CodeBlock
+  | HighlightBlock
+  | CardsBlock
+  | DiagramBlock
+  | ImageBlock;
 
 export interface Topic {
   id: string;
@@ -41,6 +94,8 @@ export interface Topic {
   blocks: ContentBlock[];
 }
 
+// widget permite que una sección aloje un componente interactivo en lugar de
+// solo bloques de lectura. Hoy el único valor es 'simulador'.
 export interface WikiSection {
   id: string;
   title: string;

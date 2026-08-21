@@ -44,6 +44,7 @@ npm run preview # servir el build de producción
     ├── components/
     │   ├── navigation.ts       Navegación SPA (hash routing)
     │   ├── content.ts          Renderizado de secciones y bloques
+    │   ├── diagrams.ts         Diagramas educativos (HTML/CSS)
     │   └── simulatorUI.ts      Interfaz del simulador SQL
     ├── simulator/
     │   ├── types.ts            Tipos del simulador (tablas, consultas, resultados)
@@ -54,5 +55,6 @@ npm run preview # servir el build de producción
         ├── main.css            Variables y estilos base
         ├── layout.css          Estructura general y responsive
         ├── components.css      Componentes de contenido
-        └── simulator.css       Estilos del simulador
+        ├── simulator.css       Estilos del simulador
+        └── diagrams.css        Estilos de los diagramas
 ```

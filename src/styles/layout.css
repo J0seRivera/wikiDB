@@ -1,4 +1,7 @@
-/* Estructura general: contenedor, cabecera, navegación y pie */
+/* =========================================
+   Estructura general: contenedor, cabecera,
+   navegación y pie de página
+   ========================================= */
 
 .container {
   width: 100%;
@@ -7,6 +10,8 @@
   padding-inline: 1rem;
 }
 
+/* Enlace "saltar al contenido": permanece oculto hasta recibir foco
+   con la tecla Tab. Mejora la navegación con teclado. */
 .skip-link {
   position: absolute;
   top: -3rem;
@@ -100,6 +105,10 @@
 .site-footer p {
   margin: 0;
 }
+
+/* =========================================
+   Diseño responsive para dispositivos pequeños
+   ========================================= */
 
 @media (max-width: 600px) {
   .site-header {

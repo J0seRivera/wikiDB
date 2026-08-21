@@ -47,7 +47,7 @@
               "style": "numbered",
               "items": [
                 "Lee los fundamentos antes de pasar a los modelos: son la base de todo lo demás.",
-                "Observa los ejemplos de código SQL: cada uno indica qué hace y por qué.",
+                "Observa los diagramas y ejemplos de código SQL: cada uno indica qué hace y por qué.",
                 "Practica en el simulador escribiendo tus propias consultas sobre la tabla de ejemplo.",
                 "Usa las conclusiones como repaso rápido antes de un examen."
               ]
@@ -66,35 +66,44 @@
           "title": "¿Qué es una base de datos?",
           "blocks": [
             {
-              "type": "paragraph",
-              "text": "Una base de datos es una colección organizada de datos relacionados que se almacena de forma persistente para poder consultarla, actualizarla y administrarla de manera eficiente. No basta con guardar información: la clave está en organizarla para que sea fácil de encontrar y de mantener."
+              "type": "highlight",
+              "title": "Definición",
+              "text": "Una base de datos es una colección organizada de datos relacionados que se almacena de forma persistente para poder consultarla, actualizarla y administrarla de manera eficiente."
             },
             {
               "type": "paragraph",
-              "text": "El propósito principal de una base de datos es:"
+              "text": "No basta con guardar información: la clave está en organizarla para que sea fácil de encontrar y de mantener."
             },
             {
-              "type": "list",
-              "style": "bulleted",
-              "items": [
-                "Almacenar grandes volúmenes de información de forma persistente y ordenada.",
-                "Permitir consultas rápidas y precisas sobre los datos.",
-                "Evitar la duplicación y las inconsistencias entre registros.",
-                "Compartir datos entre muchos usuarios y aplicaciones de forma segura y simultánea."
-              ]
-            },
-            {
-              "type": "paragraph",
-              "text": "Su importancia radica en que casi todo sistema de software necesita datos: sin bases de datos no existirían banca en línea, redes sociales, sistemas de inventario ni registros académicos. Un buen diseño de base de datos garantiza:"
-            },
-            {
-              "type": "list",
-              "style": "bulleted",
-              "items": [
-                "Integridad: los datos cumplen reglas y restricciones definidas.",
-                "Seguridad: solo los usuarios autorizados acceden a la información.",
-                "Concurrencia: muchos usuarios pueden trabajar al mismo tiempo sin corromper los datos.",
-                "Respaldo y recuperación: la información sobrevive a fallas del sistema."
+              "type": "cards",
+              "cards": [
+                {
+                  "title": "Propósito",
+                  "items": [
+                    "Almacenar grandes volúmenes de información de forma persistente y ordenada.",
+                    "Permitir consultas rápidas y precisas sobre los datos.",
+                    "Evitar la duplicación y las inconsistencias entre registros.",
+                    "Compartir datos entre muchos usuarios y aplicaciones de forma simultánea."
+                  ]
+                },
+                {
+                  "title": "Importancia",
+                  "items": [
+                    "Integridad: los datos cumplen reglas y restricciones definidas.",
+                    "Seguridad: solo los usuarios autorizados acceden a la información.",
+                    "Concurrencia: muchos usuarios trabajan a la vez sin corromper los datos.",
+                    "Respaldo y recuperación: la información sobrevive a fallas del sistema."
+                  ]
+                },
+                {
+                  "title": "Ejemplos de uso",
+                  "items": [
+                    "Banca en línea: cuentas, movimientos y saldos.",
+                    "Redes sociales: perfiles, publicaciones y amistades.",
+                    "Tiendas en línea: catálogo, carrito y pedidos.",
+                    "Universidades: estudiantes, cursos y calificaciones."
+                  ]
+                }
               ]
             }
           ]
@@ -108,31 +117,28 @@
               "text": "Existen muchas clases de bases de datos, pero las dos familias más importantes son las relacionales y las no relacionales (NoSQL)."
             },
             {
-              "type": "paragraph",
-              "text": "Bases de datos relacionales"
-            },
-            {
-              "type": "list",
-              "style": "bulleted",
-              "items": [
-                "Organizan los datos en tablas compuestas por filas y columnas.",
-                "Usan SQL como lenguaje estándar de consulta.",
-                "Garantizan integridad y consistencia mediante restricciones (claves, unicidad, tipos).",
-                "Ejemplos: MySQL, PostgreSQL, SQL Server y Oracle."
-              ]
-            },
-            {
-              "type": "paragraph",
-              "text": "Bases de datos no relacionales (NoSQL)"
-            },
-            {
-              "type": "list",
-              "style": "bulleted",
-              "items": [
-                "No requieren un esquema fijo: cada registro puede tener estructura distinta.",
-                "Priorizan la flexibilidad y la escalabilidad horizontal.",
-                "Tipos comunes: documentos, clave-valor, columnas anchas y grafos.",
-                "Ejemplos: MongoDB (documentos), Redis (clave-valor), Cassandra (columnas) y Neo4j (grafos)."
+              "type": "cards",
+              "cards": [
+                {
+                  "title": "Bases relacionales (SQL)",
+                  "text": "Organizan los datos en tablas compuestas por filas y columnas.",
+                  "items": [
+                    "Usan SQL como lenguaje estándar de consulta.",
+                    "Garantizan integridad mediante restricciones (claves, unicidad, tipos).",
+                    "Ideales cuando la consistencia es prioritaria.",
+                    "Ejemplos: MySQL, PostgreSQL, SQL Server, Oracle."
+                  ]
+                },
+                {
+                  "title": "Bases no relacionales (NoSQL)",
+                  "text": "No requieren un esquema fijo: cada registro puede tener estructura distinta.",
+                  "items": [
+                    "Priorizan la flexibilidad y la escalabilidad horizontal.",
+                    "Tipos comunes: documentos, clave-valor, columnas anchas y grafos.",
+                    "Ideales para grandes volúmenes y datos variables.",
+                    "Ejemplos: MongoDB, Redis, Cassandra, Neo4j."
+                  ]
+                }
               ]
             }
           ]
@@ -150,12 +156,14 @@
               "caption": "Diferencias entre bases relacionales y no relacionales.",
               "headers": ["Aspecto", "Relacionales (SQL)", "No relacionales (NoSQL)"],
               "rows": [
-                ["Modelo de datos", "Tablas con filas y columnas", "Documentos, clave-valor, columnas o grafos"],
-                ["Esquema", "Fijo, definido antes de guardar los datos", "Flexible, puede variar por registro"],
+                ["Modelo", "Tablas con filas y columnas", "Documentos, clave-valor, columnas o grafos"],
+                ["Estructura", "Registros uniformes con campos fijos", "Registros flexibles, incluso distintos entre sí"],
+                ["Esquema", "Fijo, definido antes de guardar los datos", "Flexible, puede evolucionar por registro"],
                 ["Lenguaje", "SQL estandarizado", "Varía según el motor (por ejemplo, consultas JSON)"],
                 ["Escalabilidad", "Principalmente vertical", "Diseñadas para escalar horizontalmente"],
-                ["Transacciones", "ACID: consistencia fuerte", "Consistencia eventual en muchos casos"],
-                ["Casos de uso típicos", "Banca, inventarios, registros académicos", "Big data, catálogos, aplicaciones en tiempo real"],
+                ["Ventajas", "Consistencia fuerte, transacciones ACID, gran madurez", "Flexibilidad, alta disponibilidad, crecimiento horizontal"],
+                ["Desventajas", "Menor flexibilidad ante cambios de esquema", "Consistencia eventual y menor estandarización"],
+                ["Casos de uso", "Banca, inventarios, registros académicos", "Big data, catálogos, aplicaciones en tiempo real"],
                 ["Ejemplos", "MySQL, PostgreSQL, SQL Server", "MongoDB, Redis, Cassandra, Neo4j"]
               ]
             }
@@ -167,28 +175,26 @@
           "blocks": [
             {
               "type": "paragraph",
-              "text": "Según su formato, los datos se clasifican en tres grandes categorías. Las bases de datos relacionales fueron diseñadas para los primeros, mientras que las NoSQL manejan mejor los otros dos."
+              "text": "Según su formato, los datos se clasifican en tres grandes categorías. Las bases relacionales fueron diseñadas para los primeros; las NoSQL manejan mejor los otros dos."
             },
             {
-              "type": "paragraph",
-              "text": "Datos estructurados: siguen un formato fijo y predefinido, organizados en filas y columnas. Es el caso típico de una tabla relacional o de una hoja de cálculo, donde cada campo tiene un tipo conocido."
-            },
-            {
-              "type": "paragraph",
-              "text": "Datos semiestructurados: no tienen un esquema rígido, pero incluyen etiquetas o marcas que dan organización, como los archivos JSON o XML. Son fáciles de intercambiar entre sistemas."
-            },
-            {
-              "type": "paragraph",
-              "text": "Datos no estructurados: carecen de un formato interno definido, como imágenes, videos, correos o documentos de texto libre. Representan la mayor parte de la información que se genera hoy."
-            },
-            {
-              "type": "table",
-              "caption": "Resumen de los tipos de datos según su estructura.",
-              "headers": ["Tipo", "Característica", "Ejemplos"],
-              "rows": [
-                ["Estructurados", "Formato fijo en filas y columnas", "Tablas relacionales, hojas de cálculo"],
-                ["Semiestructurados", "Sin esquema rígido, con etiquetas organizadoras", "JSON, XML, CSV con encabezados variables"],
-                ["No estructurados", "Sin formato interno definido", "Imágenes, videos, correos, texto libre"]
+              "type": "cards",
+              "cards": [
+                {
+                  "title": "Estructurados",
+                  "text": "Formato fijo organizado en filas y columnas, como una tabla relacional o una hoja de cálculo.",
+                  "code": "id | nombre | edad\n1  | Ana    | 22\n2  | Luis   | 35"
+                },
+                {
+                  "title": "Semiestructurados",
+                  "text": "Sin esquema rígido, pero con etiquetas que dan organización, como JSON o XML.",
+                  "code": "{\n  \"nombre\": \"Ana\",\n  \"edad\": 22\n}"
+                },
+                {
+                  "title": "No estructurados",
+                  "text": "Sin formato interno definido. Representan la mayor parte de la información que se genera hoy.",
+                  "items": ["Imagen", "Video", "PDF", "Audio", "Documento de texto libre"]
+                }
               ]
             }
           ]
@@ -206,7 +212,17 @@
           "blocks": [
             {
               "type": "paragraph",
-              "text": "El modelo Entidad-Relación (ER), propuesto por Peter Chen en 1976, es la herramienta clásica para diseñar bases de datos. Permite representar el mundo real de forma visual antes de crear las tablas, facilitando la comunicación entre analistas y clientes."
+              "text": "El modelo Entidad-Relación (ER), propuesto por Peter Chen en 1976, es la herramienta clásica para diseñar bases de datos. Permite representar el mundo real de forma visual antes de crear las tablas."
+            },
+            {
+              "type": "image",
+              "id": "entidad-relacion",
+              "alt": "Diagrama del modelo entidad-relación: la entidad CLIENTE se conecta mediante la relación realiza con la entidad PEDIDO, mostrando sus atributos y claves",
+              "caption": "Visión general del modelo Entidad-Relación para un sistema de ventas."
+            },
+            {
+              "type": "diagram",
+              "id": "er-modelo"
             },
             {
               "type": "paragraph",
@@ -216,9 +232,9 @@
               "type": "list",
               "style": "bulleted",
               "items": [
-                "Entidades: los objetos del mundo real que queremos almacenar.",
-                "Atributos: las características que describen a cada entidad.",
-                "Relaciones: las asociaciones que existen entre las entidades."
+                "Entidades: los objetos del mundo real que queremos almacenar, como CLIENTE y PEDIDO.",
+                "Atributos: las características que describen a cada entidad, como nombre o correo.",
+                "Relaciones: las asociaciones entre entidades, como \"un cliente realiza pedidos\"."
               ]
             }
           ]
@@ -229,7 +245,7 @@
           "blocks": [
             {
               "type": "paragraph",
-              "text": "Una entidad representa un objeto con existencia propia del que guardamos información. En un sistema de ventas, por ejemplo, serían entidades CLIENTE, PRODUCTO y PEDIDO. Cada entidad se convierte más adelante en una tabla."
+              "text": "Una entidad representa un objeto con existencia propia del que guardamos información. En un sistema de ventas serían entidades CLIENTE, PRODUCTO y PEDIDO. Cada entidad se convierte más adelante en una tabla."
             },
             {
               "type": "paragraph",
@@ -237,7 +253,7 @@
             },
             {
               "type": "paragraph",
-              "text": "Una relación es la asociación entre dos entidades. En nuestro ejemplo, un CLIENTE realiza PEDIDOS. Según cuántos elementos participen en cada lado, las relaciones se clasifican así:"
+              "text": "Una relación es la asociación entre dos entidades. Según cuántos elementos participen en cada lado, se clasifican así:"
             },
             {
               "type": "list",
@@ -267,10 +283,10 @@
               "caption": "Ejemplo de claves en las tablas CLIENTE y PEDIDO.",
               "headers": ["Tabla", "Columna", "Clave", "Descripción"],
               "rows": [
-                ["CLIENTE", "id", "Primaria (PK)", "Identifica cada cliente de forma única"],
+                ["CLIENTE", "id_cliente", "Primaria (PK)", "Identifica cada cliente de forma única"],
                 ["CLIENTE", "nombre", "—", "Atributo descriptivo del cliente"],
-                ["PEDIDO", "id", "Primaria (PK)", "Identifica cada pedido de forma única"],
-                ["PEDIDO", "cliente_id", "Foránea (FK)", "Referencia a CLIENTE.id y vincula el pedido con su cliente"]
+                ["PEDIDO", "id_pedido", "Primaria (PK)", "Identifica cada pedido de forma única"],
+                ["PEDIDO", "id_cliente", "Foránea (FK)", "Referencia a CLIENTE.id_cliente y vincula el pedido con su cliente"]
               ]
             }
           ]
@@ -284,13 +300,17 @@
               "text": "El modelo lógico traduce el diagrama ER a tablas concretas. La conversión sigue reglas simples: cada entidad se convierte en una tabla, cada atributo en una columna y cada relación uno a muchos se implementa con una clave foránea ubicada en el lado del \"muchos\"."
             },
             {
-              "type": "code",
-              "caption": "Modelo lógico resultante para CLIENTE y PEDIDO.",
-              "code": "CREATE TABLE cliente (\n  id     INT PRIMARY KEY,\n  nombre VARCHAR(50),\n  correo VARCHAR(80)\n);\n\nCREATE TABLE pedido (\n  id         INT PRIMARY KEY,\n  cliente_id INT REFERENCES cliente(id),\n  fecha      DATE,\n  total      DECIMAL(10,2)\n);"
+              "type": "diagram",
+              "id": "modelo-logico"
             },
             {
-              "type": "paragraph",
-              "text": "Obsérvese cómo pedido incluye la columna cliente_id como clave foránea: es la huella de la relación \"un cliente realiza muchos pedidos\" dentro del modelo lógico."
+              "type": "highlight",
+              "text": "La clave primaria identifica de forma única un registro, mientras que la clave foránea permite relacionar registros entre tablas."
+            },
+            {
+              "type": "code",
+              "caption": "Modelo lógico expresado en SQL.",
+              "code": "CREATE TABLE cliente (\n  id_cliente INT PRIMARY KEY,\n  nombre     VARCHAR(50),\n  correo     VARCHAR(80)\n);\n\nCREATE TABLE pedido (\n  id_pedido  INT PRIMARY KEY,\n  fecha      DATE,\n  id_cliente INT REFERENCES cliente(id_cliente)\n);"
             }
           ]
         },
@@ -300,16 +320,17 @@
           "blocks": [
             {
               "type": "paragraph",
-              "text": "En la arquitectura cliente-servidor, la base de datos reside en un servidor centralizado y las aplicaciones (clientes) le envían solicitudes a través de la red. El servidor procesa cada consulta y devuelve únicamente el resultado, nunca los archivos completos de datos."
+              "text": "En la arquitectura cliente-servidor, la base de datos reside en un servidor centralizado y las aplicaciones (clientes) le envían solicitudes a través de la red. El servidor procesa cada consulta y devuelve únicamente el resultado."
             },
             {
-              "type": "list",
-              "style": "numbered",
-              "items": [
-                "El cliente envía una consulta (por ejemplo, un SELECT escrito en SQL).",
-                "El servidor de base de datos valida permisos, ejecuta la consulta y aplica optimizaciones.",
-                "El servidor devuelve el resultado al cliente, que lo presenta al usuario."
-              ]
+              "type": "image",
+              "id": "cliente-servidor",
+              "alt": "Esquema de la arquitectura cliente-servidor donde el cliente envía peticiones al servidor de aplicaciones y este consulta la base de datos",
+              "caption": "Flujo de comunicación entre cliente, servidor y base de datos."
+            },
+            {
+              "type": "diagram",
+              "id": "cliente-servidor"
             },
             {
               "type": "paragraph",
@@ -326,12 +347,22 @@
               "text": "La escalabilidad es la capacidad del sistema para crecer y soportar más carga (más usuarios, más consultas, más datos) sin degradar su rendimiento. Existen dos estrategias complementarias."
             },
             {
-              "type": "paragraph",
-              "text": "Escalabilidad vertical (scale up): aumentar la potencia del servidor existente agregando más CPU, memoria RAM o discos más rápidos. Es sencilla porque no cambia la aplicación, pero tiene límites físicos y económicos."
+              "type": "image",
+              "id": "escalabilidad",
+              "alt": "Comparación entre escalabilidad vertical, que agrega más recursos a un único servidor, y escalabilidad horizontal, que incorpora más servidores al sistema",
+              "caption": "Las dos estrategias de escalabilidad frente al crecimiento de la demanda."
+            },
+            {
+              "type": "diagram",
+              "id": "escalabilidad"
             },
             {
               "type": "paragraph",
-              "text": "Escalabilidad horizontal (scale out): agregar más servidores que trabajen en conjunto distribuyendo la carga. Teóricamente permite crecer sin límite usando hardware común, aunque exige balanceo de carga y distribución de datos."
+              "text": "La escalabilidad vertical aumenta la potencia del servidor existente agregando más CPU, memoria RAM o almacenamiento. Es sencilla porque no cambia la aplicación, pero tiene límites físicos y económicos."
+            },
+            {
+              "type": "paragraph",
+              "text": "La escalabilidad horizontal agrega más servidores que distribuyen la carga entre sí. Teóricamente permite crecer sin límite usando hardware común, aunque exige balanceo de carga y distribución de datos."
             },
             {
               "type": "table",
@@ -352,19 +383,19 @@
           "blocks": [
             {
               "type": "paragraph",
-              "text": "La replicación consiste en mantener copias de los mismos datos en varios servidores. El servidor principal recibe las escrituras y propaga los cambios a las réplicas automáticamente."
+              "text": "La replicación consiste en mantener copias de los mismos datos en varios servidores. Sirve para repartir la carga de consultas, acercar los datos a cada región y proteger el sistema ante fallas."
+            },
+            {
+              "type": "diagram",
+              "id": "replicacion"
             },
             {
               "type": "paragraph",
-              "text": "En el esquema Master-Slave (hoy llamado Primary-Replica), un servidor primario acepta todas las escrituras, mientras que una o más réplicas mantienen copias sincronizadas y atienden las lecturas. Así se reparte la carga de consultas y se gana redundancia."
+              "text": "En el esquema Primary-Replica (antes llamado Master-Slave), un servidor primario acepta todas las escrituras, mientras que una o más réplicas mantienen copias sincronizadas y atienden las lecturas."
             },
             {
               "type": "paragraph",
               "text": "En el esquema Multi-Master, varios servidores pueden aceptar escrituras al mismo tiempo y sincronizan sus cambios entre sí. Aumenta la disponibilidad y el rendimiento de escritura, pero obliga a resolver conflictos cuando dos nodos modifican el mismo dato."
-            },
-            {
-              "type": "paragraph",
-              "text": "Beneficios de la replicación:"
             },
             {
               "type": "list",
@@ -373,7 +404,7 @@
                 "Alta disponibilidad: si el primario falla, una réplica puede tomar su lugar.",
                 "Balanceo de lecturas: las consultas se reparten entre varias réplicas.",
                 "Distribución geográfica: réplicas cercanas a cada región reducen la latencia.",
-                "Respaldos seguros: se pueden respaldar réplicas sin afectar al servidor principal."
+                "Respaldos seguros: se respaldan réplicas sin afectar al servidor principal."
               ]
             }
           ]
@@ -384,11 +415,15 @@
           "blocks": [
             {
               "type": "paragraph",
-              "text": "La disponibilidad mide la proporción del tiempo en que el sistema permanece operativo y accesible. Se expresa como porcentaje: una disponibilidad de 99.9% admite alrededor de 8.7 horas de inactividad al año, mientras que 99.99% la reduce a menos de una hora."
+              "text": "La disponibilidad es la capacidad de un sistema para permanecer operativo y accesible cuando se lo necesita. Cuanto mayor sea la disponibilidad que requiere un servicio, más importante resulta eliminar los puntos únicos de falla."
+            },
+            {
+              "type": "diagram",
+              "id": "disponibilidad"
             },
             {
               "type": "paragraph",
-              "text": "Para lograr alta disponibilidad se eliminan los puntos únicos de falla: se replican los servidores, se configuran mecanismos de failover (reemplazo automático del nodo caído) y se distribuyen los sistemas en distintas ubicaciones físicas. La replicación vista anteriormente es, precisamente, la base técnica de la mayoría de estas soluciones."
+              "text": "La redundancia es la clave: si el servidor principal falla, una réplica puede tomar su lugar automáticamente (failover) y el servicio continúa disponible para los usuarios. La replicación de la sección anterior es la base técnica de esta estrategia."
             }
           ]
         }
@@ -434,22 +469,27 @@
           "blocks": [
             {
               "type": "paragraph",
-              "text": "El DDL define y modifica la estructura de la base de datos: tablas, columnas y tipos. Sus comandos principales son CREATE, ALTER y DROP."
+              "text": "El DDL define y modifica la estructura de la base de datos: tablas, columnas y tipos. Sus tres comandos principales son:"
             },
             {
-              "type": "code",
-              "caption": "CREATE: crea una nueva tabla con sus columnas y tipos.",
-              "code": "CREATE TABLE usuarios (\n  id     INT PRIMARY KEY,\n  nombre VARCHAR(50),\n  edad   INT,\n  ciudad VARCHAR(50)\n);"
-            },
-            {
-              "type": "code",
-              "caption": "ALTER: modifica la estructura de una tabla existente.",
-              "code": "ALTER TABLE usuarios ADD COLUMN correo VARCHAR(80);"
-            },
-            {
-              "type": "code",
-              "caption": "DROP: elimina completamente una tabla, con su estructura y sus datos.",
-              "code": "DROP TABLE usuarios;"
+              "type": "cards",
+              "cards": [
+                {
+                  "title": "CREATE",
+                  "text": "Crea una nueva tabla con sus columnas y tipos de dato.",
+                  "code": "CREATE TABLE usuarios (\n  id     INT PRIMARY KEY,\n  nombre VARCHAR(50),\n  edad   INT,\n  ciudad VARCHAR(50)\n);"
+                },
+                {
+                  "title": "ALTER",
+                  "text": "Modifica la estructura de una tabla existente.",
+                  "code": "ALTER TABLE usuarios\nADD COLUMN correo VARCHAR(80);"
+                },
+                {
+                  "title": "DROP",
+                  "text": "Elimina completamente una tabla, con su estructura y sus datos.",
+                  "code": "DROP TABLE usuarios;"
+                }
+              ]
             },
             {
               "type": "notice",
@@ -464,27 +504,32 @@
           "blocks": [
             {
               "type": "paragraph",
-              "text": "El DML trabaja con los datos dentro de las tablas: consultar, insertar, actualizar y eliminar. Sus cuatro comandos fundamentales son SELECT, INSERT, UPDATE y DELETE."
+              "text": "El DML trabaja con los datos dentro de las tablas: consultar, insertar, actualizar y eliminar. Sus cuatro comandos fundamentales son:"
             },
             {
-              "type": "code",
-              "caption": "SELECT: consulta filas de una tabla, opcionalmente filtradas con WHERE.",
-              "code": "SELECT nombre, edad\nFROM usuarios\nWHERE ciudad = 'Guatemala';"
-            },
-            {
-              "type": "code",
-              "caption": "INSERT: agrega nuevas filas a la tabla.",
-              "code": "INSERT INTO usuarios (nombre, edad, ciudad)\nVALUES ('Ana', 22, 'Guatemala');"
-            },
-            {
-              "type": "code",
-              "caption": "UPDATE: modifica los valores de filas existentes.",
-              "code": "UPDATE usuarios\nSET edad = 23\nWHERE id = 1;"
-            },
-            {
-              "type": "code",
-              "caption": "DELETE: elimina filas que cumplan una condición.",
-              "code": "DELETE FROM usuarios\nWHERE id = 1;"
+              "type": "cards",
+              "cards": [
+                {
+                  "title": "SELECT",
+                  "text": "Consulta filas de una tabla, opcionalmente filtradas con WHERE.",
+                  "code": "SELECT nombre, edad\nFROM usuarios\nWHERE ciudad = 'Guatemala';"
+                },
+                {
+                  "title": "INSERT",
+                  "text": "Agrega nuevas filas a la tabla.",
+                  "code": "INSERT INTO usuarios (nombre, edad, ciudad)\nVALUES ('Ana', 22, 'Guatemala');"
+                },
+                {
+                  "title": "UPDATE",
+                  "text": "Modifica los valores de filas existentes.",
+                  "code": "UPDATE usuarios\nSET edad = 23\nWHERE id = 1;"
+                },
+                {
+                  "title": "DELETE",
+                  "text": "Elimina filas que cumplan una condición.",
+                  "code": "DELETE FROM usuarios\nWHERE id = 1;"
+                }
+              ]
             },
             {
               "type": "notice",
@@ -524,7 +569,7 @@
             {
               "type": "code",
               "caption": "Insertar, actualizar y eliminar un registro.",
-              "code": "INSERT INTO usuarios (nombre, edad, ciudad)\nVALUES ('Pedro', 27, 'Cobán');\n\nUPDATE usuarios SET edad = 28 WHERE nombre = 'Pedro';\n\nDELETE FROM usuarios WHERE nombre = 'Pedro';"
+              "code": "INSERT INTO usuarios (nombre, edad, ciudad)\nVALUES ('Pedro', 24, 'Cobán');\n\nUPDATE usuarios SET edad = 28 WHERE nombre = 'Pedro';\n\nDELETE FROM usuarios WHERE nombre = 'Pedro';"
             }
           ]
         }

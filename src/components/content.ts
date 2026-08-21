@@ -1,5 +1,42 @@
-import type { CodeBlock, ContentBlock, TableBlock, Topic, WikiSection } from '../types';
+// Renderizado del contenido educativo.
+//
+// Este módulo convierte los datos tipados del JSON en elementos del DOM:
+//
+//   JSON → contenido tipado (WikiData) → renderBlock() → DOM
+//
+// Cada tipo de bloque tiene su propia función de renderizado (párrafo, lista,
+// tabla, código, aviso, destacado, tarjetas, diagrama e imagen). Todos los
+// textos se insertan con textContent, nunca con innerHTML: el contenido no
+// puede interpretarse como HTML, una buena práctica incluso trabajando con
+// datos propios.
+//
+// El helper createElement() se exporta porque otros componentes (diagramas y
+// simulador) construyen sus interfaces con la misma convención.
+
+import type {
+  CardsBlock,
+  CodeBlock,
+  ContentBlock,
+  HighlightBlock,
+  ImageBlock,
+  TableBlock,
+  Topic,
+  WikiSection,
+} from '../types';
+import { renderDiagram } from './diagrams';
 import { renderSimulator } from './simulatorUI';
+
+// Vite resuelve estas importaciones como URLs finales del asset (con hash en
+// producción). El JSON solo guarda el id; aquí se traduce a la ruta real.
+import clienteServidorImg from '../assets/cliente-servidor.jpg';
+import entidadRelacionImg from '../assets/entidad-relacion.jpg';
+import escalabilidadImg from '../assets/escalabilidad-h-v.webp';
+
+const IMAGE_SOURCES: Record<string, string> = {
+  'cliente-servidor': clienteServidorImg,
+  'entidad-relacion': entidadRelacionImg,
+  escalabilidad: escalabilidadImg,
+};
 
 export function createElement(tag: string, className?: string, text?: string): HTMLElement {
   const element = document.createElement(tag);
@@ -12,6 +49,8 @@ function renderParagraph(text: string): HTMLElement {
   return createElement('p', 'content-block', text);
 }
 
+// Los avisos combinan un símbolo (ℹ / ⚠) con el texto: el significado no
+// depende únicamente del color, lo que mejora la accesibilidad.
 function renderNotice(tone: 'info' | 'warning', text: string): HTMLElement {
   const icons = { info: 'ℹ', warning: '⚠' } as const;
   const notice = createElement('p', `notice notice--${tone}`);
@@ -28,6 +67,8 @@ function renderList(style: 'bulleted' | 'numbered', items: string[]): HTMLElemen
   return list;
 }
 
+// Las tablas van dentro de un contenedor con overflow-x: así pueden hacer
+// scroll horizontal ellas solas en móvil sin deformar el resto de la página.
 function renderTable(block: TableBlock): HTMLElement {
   const wrapper = createElement('div', 'table-wrapper');
   const table = createElement('table', 'data-table');
@@ -57,19 +98,71 @@ function renderTable(block: TableBlock): HTMLElement {
   return wrapper;
 }
 
-function renderCode(block: CodeBlock): HTMLElement {
+// Se separó del bloque 'code' para reutilizarla dentro de las tarjetas.
+function renderCodeFigure(code: string, caption?: string): HTMLElement {
   const figure = createElement('figure', 'code-block');
-  if (block.caption) figure.append(createElement('figcaption', 'code-block__caption', block.caption));
+  if (caption) figure.append(createElement('figcaption', 'code-block__caption', caption));
 
   const pre = document.createElement('pre');
-  const code = document.createElement('code');
-  code.textContent = block.code;
-  pre.append(code);
+  const codeElement = document.createElement('code');
+  codeElement.textContent = code;
+  pre.append(codeElement);
   figure.append(pre);
 
   return figure;
 }
 
+function renderCode(block: CodeBlock): HTMLElement {
+  return renderCodeFigure(block.code, block.caption);
+}
+
+function renderHighlight(block: HighlightBlock): HTMLElement {
+  const aside = createElement('aside', 'highlight');
+  if (block.title) aside.append(createElement('p', 'highlight__title', block.title));
+  aside.append(createElement('p', 'highlight__text', block.text));
+  return aside;
+}
+
+// Tarjetas flexibles: cada una puede combinar título, texto, lista y código
+// (por ejemplo, los comandos DDL/DML o los tipos de datos).
+function renderCards(block: CardsBlock): HTMLElement {
+  const grid = createElement('div', 'card-grid');
+
+  for (const card of block.cards) {
+    const article = createElement('article', 'info-card');
+    article.append(createElement('h3', 'info-card__title', card.title));
+    if (card.text) article.append(createElement('p', 'info-card__text', card.text));
+    if (card.items) {
+      const list = createElement('ul', 'info-card__list');
+      for (const item of card.items) list.append(createElement('li', undefined, item));
+      article.append(list);
+    }
+    if (card.code) article.append(renderCodeFigure(card.code));
+    grid.append(article);
+  }
+
+  return grid;
+}
+
+// Imagen educativa proporcionada por el desarrollador. El alt viaja en el
+// JSON y es obligatorio: describe el propósito educativo de la imagen.
+function renderImage(block: ImageBlock): HTMLElement {
+  const src = IMAGE_SOURCES[block.id];
+  if (!src) throw new Error(`Imagen desconocida: ${block.id}`);
+
+  const figure = createElement('figure', 'edu-image');
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = block.alt;
+  img.loading = 'lazy';
+  figure.append(img);
+  if (block.caption) figure.append(createElement('figcaption', undefined, block.caption));
+  return figure;
+}
+
+// Punto único de despacho: según el tipo de bloque, delega al renderer
+// correspondiente. Agregar un tipo nuevo de contenido = agregar una interfaz
+// en types.ts + un caso aquí + su función de renderizado.
 function renderBlock(block: ContentBlock): HTMLElement {
   switch (block.type) {
     case 'paragraph':
@@ -82,6 +175,14 @@ function renderBlock(block: ContentBlock): HTMLElement {
       return renderTable(block);
     case 'code':
       return renderCode(block);
+    case 'highlight':
+      return renderHighlight(block);
+    case 'cards':
+      return renderCards(block);
+    case 'diagram':
+      return renderDiagram(block.id);
+    case 'image':
+      return renderImage(block);
   }
 }
 
@@ -93,6 +194,8 @@ function renderTopic(topic: Topic): HTMLElement {
   return article;
 }
 
+// Renderiza una sección completa. Si la sección declara un widget (como el
+// simulador), este se inserta antes de los temas de lectura.
 export function renderSection(section: WikiSection): HTMLElement {
   const sectionElement = createElement('section', 'wiki-section');
   sectionElement.id = `seccion-${section.id}`;

@@ -1,3 +1,18 @@
+// Ejecutor de consultas sobre la base en memoria.
+//
+// Recibe una ParsedQuery (ya validada por el parser) y la aplica a la base:
+//
+//   SELECT → filtra con WHERE y proyecta las columnas pedidas.
+//   INSERT → construye la fila, asigna el id y la agrega.
+//   UPDATE → modifica las filas que cumplen la condición.
+//   DELETE → conserva solo las filas que NO cumplen la condición.
+//
+// Este módulo es el ÚNICO autorizado a mutar la base de datos. Antes de
+// tocar nada valida tablas, columnas y tipos; si algo falla lanza un
+// SimulatorError con un mensaje pensado para el estudiante. Las validaciones
+// se hacen siempre ANTES de modificar: así una consulta inválida nunca deja
+// la tabla a medias.
+
 import { SimulatorError } from './types';
 import type {
   Column,
@@ -47,6 +62,8 @@ function getColumn(table: Table, name: string): Column {
   return column;
 }
 
+// Comprueba que el literal del SQL coincida con el tipo declarado de la
+// columna: números sin comillas, texto entre comillas simples.
 function validateValue(column: Column, value: SqlValueType): void {
   if (column.type === 'number' && typeof value !== 'number') {
     throw new SimulatorError(`La columna "${column.name}" espera un valor numérico.`);
@@ -56,12 +73,16 @@ function validateValue(column: Column, value: SqlValueType): void {
   }
 }
 
+// Valida una condición WHERE contra el esquema y devuelve el nombre real de
+// la columna (la búsqueda no distingue mayúsculas/minúsculas).
 function resolveCondition(table: Table, condition: WhereCondition): ResolvedCondition {
   const column = getColumn(table, condition.column);
   validateValue(column, condition.value);
   return { columnName: column.name, operator: condition.operator, value: condition.value };
 }
 
+// Ordena cualquier par de valores: numéricos por magnitud y el resto como
+// texto. Permite usar > < >= <= también sobre columnas de texto.
 function compareValues(a: SqlValueType, b: SqlValueType): number {
   if (typeof a === 'number' && typeof b === 'number') return a - b;
   return String(a).localeCompare(String(b));
@@ -83,6 +104,8 @@ function rowMatches(row: Row, condition: ResolvedCondition): boolean {
   }
 }
 
+// El id es autogenerado: máximo actual + 1. Así los ids nunca se repiten,
+// aunque se eliminen filas intermedias.
 function nextId(rows: Row[]): number {
   return rows.reduce((max, row) => Math.max(max, Number(row['id'])), 0) + 1;
 }
@@ -90,6 +113,8 @@ function nextId(rows: Row[]): number {
 function executeSelect(database: Database, query: Extract<ParsedQuery, { kind: 'select' }>): QueryResult {
   const table = getTable(database, query.table);
 
+  // "*" se expande al esquema completo; las demás columnas se validan una
+  // por una antes de leer filas.
   const resultColumns = query.columns.includes('*')
     ? table.columns.map((column) => column.name)
     : query.columns.map((name) => getColumn(table, name).name);
@@ -99,6 +124,8 @@ function executeSelect(database: Database, query: Extract<ParsedQuery, { kind: '
     ? table.rows.filter((row) => rowMatches(row, condition))
     : table.rows;
 
+  // Proyección: cada fila devuelta contiene únicamente las columnas
+  // solicitadas, en el orden pedido.
   const rows = matchingRows.map((row) => {
     const projected: Row = {};
     for (const name of resultColumns) projected[name] = row[name];
@@ -118,6 +145,8 @@ function executeInsert(database: Database, query: Extract<ParsedQuery, { kind: '
     }
   }
 
+  // La fila se arma completa (con su id) y todos los valores se validan
+  // ANTES de insertarla: si algo falla, la tabla queda intacta.
   const row: Row = { id: nextId(table.rows) };
   query.columns.forEach((name, index) => {
     const column = getColumn(table, name);
@@ -132,6 +161,8 @@ function executeInsert(database: Database, query: Extract<ParsedQuery, { kind: '
 function executeUpdate(database: Database, query: Extract<ParsedQuery, { kind: 'update' }>): QueryResult {
   const table = getTable(database, query.table);
 
+  // Igual que en INSERT: primero se resuelven y validan todas las
+  // asignaciones, después se modifican las filas.
   const assignments = query.assignments.map((assignment) => ({
     column: getColumn(table, assignment.column),
     value: assignment.value,
@@ -154,6 +185,8 @@ function executeDelete(database: Database, query: Extract<ParsedQuery, { kind: '
   const table = getTable(database, query.table);
   const condition = resolveCondition(table, query.where);
 
+  // Filtrado inverso: sobreviven las filas que NO cumplen la condición. El
+  // conteo previo permite informar cuántas filas fueron eliminadas.
   const totalBefore = table.rows.length;
   table.rows = table.rows.filter((row) => !rowMatches(row, condition));
 

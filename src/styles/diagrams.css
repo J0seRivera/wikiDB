@@ -1,0 +1,237 @@
+/* =========================================
+   Diagramas educativos construidos con HTML y CSS.
+   Los nodos son texto real (no imágenes ni SVG con coordenadas
+   fijas), por lo que se reacomodan solos en pantallas pequeñas.
+   ========================================= */
+
+.diagram {
+  margin: 0 0 1rem;
+  padding: 1.4rem 1rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.diagram__canvas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.diagram figcaption {
+  margin-top: 1.1rem;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.node-box {
+  width: min(100%, 18rem);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  text-align: center;
+}
+
+.node-box__title {
+  margin: 0;
+  padding: 0.45rem 0.9rem;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+}
+
+.node-box__subtitle {
+  margin: 0;
+  padding: 0.3rem 0.9rem 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.node-box__body {
+  margin: 0;
+  padding: 0.35rem 0.9rem 0.6rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.flow-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block: 0.2rem;
+  text-align: center;
+}
+
+.flow-arrow__glyph {
+  color: var(--color-accent);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.flow-arrow__label {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.flow-arrow--fail .flow-arrow__glyph {
+  color: #b42323;
+}
+
+.flow-arrow--success .flow-arrow__glyph {
+  color: #1c7c3d;
+}
+
+.entity-card {
+  width: min(100%, 17rem);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.entity-card__name {
+  margin: 0;
+  padding: 0.45rem 0.9rem;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.entity-card--logical .entity-card__name {
+  background: #334155;
+}
+
+.entity-card__attributes {
+  margin: 0;
+  padding: 0.3rem 0;
+  list-style: none;
+}
+
+.entity-card__attributes li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.28rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+}
+
+.entity-card__attributes li + li {
+  border-top: 1px dashed var(--color-border);
+}
+
+.key-badge {
+  flex-shrink: 0;
+  padding: 0.05rem 0.35rem;
+  border-radius: 3px;
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.key-badge--pk {
+  background: var(--color-accent-soft);
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+.key-badge--fk {
+  background: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+  color: var(--color-warning-text);
+}
+
+.diagram-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+.diagram-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 0.9rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.diagram-panel__title {
+  margin: 0 0 0.3rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.diagram-panel__note {
+  margin: 0.5rem 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.scaling-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  font-size: 0.88rem;
+}
+
+.scaling-list li::before {
+  content: '+ ';
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.diagram-tree {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.diagram-branch {
+  align-self: center;
+  width: 50%;
+  height: 1.3rem;
+  border: 2px solid var(--color-accent);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+}
+
+.diagram-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.status-pill {
+  margin: 0;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.status-pill--success {
+  background: #e8f6ec;
+  border: 1px solid #bfe3ca;
+  color: #155c31;
+}

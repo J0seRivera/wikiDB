@@ -1,3 +1,16 @@
+// Navegación SPA basada en hashes (#/fundamentos).
+//
+// ¿Por qué hashes? Cambiar el hash no recarga la página y queda registrado
+// en el historial del navegador, de modo que los botones atrás/adelante
+// siguen funcionando sin necesidad de un router externo.
+//
+// Flujo completo:
+//   clic en un enlace  →  cambia location.hash
+//     →  se dispara el evento "hashchange"
+//     →  se resuelve el id de la sección a partir del hash
+//     →  se marca el enlace activo (clase CSS + aria-current="page")
+//     →  se avisa a la aplicación con onSectionChange para renderizarla.
+
 import type { WikiSection } from '../types';
 
 export function initNavigation(
@@ -21,6 +34,9 @@ export function initNavigation(
 
   let currentId = '';
 
+  // Marca el enlace activo y notifica qué sección debe mostrarse. El guard
+  // evita renderizar dos veces la misma sección (por ejemplo, al hacer clic
+  // en el enlace ya activo).
   function activate(sectionId: string): void {
     if (sectionId === currentId) return;
     currentId = sectionId;
@@ -31,6 +47,9 @@ export function initNavigation(
       else link.removeAttribute('aria-current');
     }
 
+    // Normaliza la URL si el hash inicial era inválido o no existía, para
+    // que el enlace activo y la dirección siempre coincidan. Se usa
+    // replaceState para no agregar entradas extra al historial.
     if (window.location.hash !== `#/${sectionId}`) {
       history.replaceState(null, '', `#/${sectionId}`);
     }
@@ -38,6 +57,8 @@ export function initNavigation(
     onSectionChange(sectionId);
   }
 
+  // Traduce el hash actual ("#/sql") a un id conocido. Si el hash no
+  // corresponde a ninguna sección (o está vacío), se muestra la primera.
   function sectionIdFromHash(): string {
     const candidate = window.location.hash.replace(/^#\/?/, '');
     return sections.some((section) => section.id === candidate) ? candidate : sections[0].id;

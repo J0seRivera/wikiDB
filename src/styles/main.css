@@ -1,6 +1,12 @@
 @import './layout.css';
 @import './components.css';
 @import './simulator.css';
+@import './diagrams.css';
+
+/* =========================================
+   Variables de diseño: paleta, tipografía y medidas.
+   Cambiar un valor aquí actualiza toda la aplicación.
+   ========================================= */
 
 :root {
   --color-bg: #f4f6f9;
@@ -12,6 +18,8 @@
   --color-border: #dbe2ec;
   --color-code-bg: #f2f5fa;
   --color-code-text: #16324f;
+  --color-highlight-bg: #eef3fc;
+  --color-card-bg: #f8fafc;
   --color-info-bg: #e7f0fd;
   --color-info-border: #bfd7f6;
   --color-info-text: #1c3d66;
@@ -25,6 +33,10 @@
   --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.08);
   --container-max: 62rem;
 }
+
+/* =========================================
+   Reinicio y estilos base
+   ========================================= */
 
 *,
 *::before,

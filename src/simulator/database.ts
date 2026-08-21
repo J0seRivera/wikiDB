@@ -1,5 +1,19 @@
+// Base de datos educativa en memoria.
+//
+// El simulador no usa un motor real: la "base de datos" es un objeto
+// JavaScript que vive mientras la página está abierta. Recargar borra los
+// cambios, y el botón "Restablecer datos" vuelve al estado inicial sin
+// recargar.
+//
+// createUsuariosTable() devuelve un objeto nuevo cada vez que se llama. Eso
+// es intencional: si todas las bases compartieran la misma referencia a las
+// filas, un INSERT hecho por el usuario contaminaría el estado inicial y el
+// botón de restablecer no funcionaría.
+
 import type { Database, Table } from './types';
 
+// Nombre único de tabla del simulador; también lo usa la interfaz para
+// dibujar el panel "Datos actuales".
 export const USERS_TABLE = 'usuarios';
 
 function createUsuariosTable(): Table {
@@ -25,6 +39,8 @@ export function createInitialDatabase(): Database {
   return { tables: { [USERS_TABLE]: createUsuariosTable() } };
 }
 
+// Reemplaza el contenido de la base existente (misma referencia) con una
+// copia fresca del estado inicial.
 export function resetDatabase(database: Database): void {
   database.tables = { [USERS_TABLE]: createUsuariosTable() };
 }

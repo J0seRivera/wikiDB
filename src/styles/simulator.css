@@ -1,4 +1,6 @@
-/* Simulador SQL: editor, botones, estado y paneles */
+/* =========================================
+   Simulador SQL: paneles, editor, botones y estado
+   ========================================= */
 
 .simulator {
   display: grid;
@@ -94,6 +96,8 @@
   border-radius: 999px;
 }
 
+/* Mensajes de resultado: el símbolo (✓ / ✕) acompaña al color,
+   de modo que el estado no se comunica solo con colores. */
 .query-status {
   margin: 0 0 1rem;
   padding: 0.75rem 1rem;
@@ -123,6 +127,10 @@
   border-color: var(--color-info-border);
   color: var(--color-info-text);
 }
+
+/* =========================================
+   Diseño responsive: botones cómodos en móvil
+   ========================================= */
 
 @media (max-width: 600px) {
   .simulator-card {

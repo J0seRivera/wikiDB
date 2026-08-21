@@ -1,3 +1,22 @@
+// Interfaz del simulador SQL.
+//
+// Este componente conecta al usuario con el motor educativo. El flujo de
+// datos completo es:
+//
+//   SQL escrito en el textarea
+//     → parser.parseSql()        genera la consulta estructurada
+//     → executor.executeQuery()  la ejecuta sobre la base en memoria
+//     → resultado tipado (QueryResult)
+//     → este componente lo presenta (tabla de resultados o mensaje ✓/✕)
+//
+// La base de datos vive a nivel de módulo (variable `database`): así los
+// cambios hechos con INSERT/UPDATE/DELETE persisten mientras el usuario
+// navega por la SPA y solo se pierden al recargar la página.
+//
+// Los botones de ejemplos NO ejecutan la consulta automáticamente: cargan el
+// texto en el editor para que el estudiante presione "Ejecutar consulta" y
+// relacione la acción con su resultado.
+
 import { executeQuery } from '../simulator/executor';
 import { parseSql } from '../simulator/parser';
 import { createInitialDatabase, resetDatabase, USERS_TABLE } from '../simulator/database';
@@ -23,6 +42,8 @@ let database: Database = createInitialDatabase();
 export function renderSimulator(): HTMLElement {
   const root = createElement('div', 'simulator');
 
+  // Editor de consultas: un textarea sencillo es suficiente para el alcance
+  // educativo del proyecto (sin editores externos ni resaltado de sintaxis).
   const editor = document.createElement('textarea');
   editor.id = 'sql-input';
   editor.className = 'simulator-editor';
@@ -33,6 +54,8 @@ export function renderSimulator(): HTMLElement {
   editor.setAttribute('autocapitalize', 'off');
   editor.setAttribute('aria-label', 'Consulta SQL');
 
+  // Región viva: los lectores de pantalla anuncian los mensajes de resultado
+  // sin mover el foco del usuario.
   const statusElement = createElement('p', 'query-status');
   statusElement.setAttribute('role', 'status');
   statusElement.setAttribute('aria-live', 'polite');
@@ -61,6 +84,10 @@ export function renderSimulator(): HTMLElement {
     examplesList.append(button);
   }
 
+  // Tres paneles claramente separados: la consulta que se escribe, el
+  // resultado de la última ejecución y el estado real de los datos. Verlos
+  // juntos ayuda a entender que SELECT consulta y INSERT/UPDATE/DELETE
+  // modifican la misma tabla.
   const queryCard = createElement('section', 'simulator-card');
   queryCard.append(
     createElement('h2', 'simulator-card__title', 'Consulta'),
@@ -103,6 +130,9 @@ export function renderSimulator(): HTMLElement {
       const query = parseSql(editor.value);
       showResult(executeQuery(database, query));
     } catch (error) {
+      // SimulatorError contiene mensajes pensados para el estudiante y se
+      // muestran tal cual. Cualquier otro error se registra en consola para
+      // desarrollo y se muestra un mensaje genérico al usuario.
       if (error instanceof SimulatorError) {
         showResult({ kind: 'error', message: error.message });
       } else {
@@ -131,6 +161,9 @@ export function renderSimulator(): HTMLElement {
     editor.focus();
   }
 
+  // Presenta el resultado según su tipo: SELECT dibuja una tabla; las
+  // operaciones de escritura muestran cuántas filas fueron afectadas (o un
+  // aviso si ninguna coincidió); los errores se muestran con ✕.
   function showResult(result: QueryResult): void {
     if (result.kind === 'error') {
       resultArea.replaceChildren();
@@ -170,12 +203,17 @@ export function renderSimulator(): HTMLElement {
     statusElement.textContent = message;
   }
 
+  // Redibuja la tabla "Datos actuales" desde la base en memoria. Se llama
+  // después de cada ejecución para que INSERT/UPDATE/DELETE se reflejen de
+  // inmediato.
   function refreshDataTable(): void {
     const table = database.tables[USERS_TABLE];
     dataTableWrapper.replaceChildren(buildTable(table.columns.map((column) => column.name), table.rows));
   }
 }
 
+// Tabla HTML construida con textContent (nunca innerHTML): el contenido de
+// las filas proviene del usuario y debe tratarse solo como texto.
 function buildTable(columns: string[], rows: Row[]): HTMLElement {
   const wrapper = createElement('div', 'table-wrapper');
   const table = createElement('table', 'data-table');
